@@ -51,17 +51,16 @@ def setcookie():
     # if user generates a POST to our API
     if request.method == "POST":
         # if nm was assigned via the POST
-        if request.form.get("nm") and request.form.get('pos'):
+        if request.form.get("nm"):
             # if request.form["nm"] <-- this also works, but returns ERROR if no nm
             user = request.form.get("nm")  # grab the value of nm from the POST
             pos = request.form.get("pos")
             dob = request.form.get("tm")
             why = request.form.get("tms")
+            if why == '':
+                why = 'Unanswered'
         else:  # if a user sent a post without nm then assign value defaultuser
-            user = "defaultuser"
-            pos = 'default'
-            dob = 'default'
-            why = 'default'
+            return redirect(url_for('setcookie'))
 
         # Note that cookies are set on response objects.
         # Since you normally just return strings
@@ -80,9 +79,14 @@ def setcookie():
     if request.method == "GET":  # if the user sends a GET
         return redirect(url_for("index"))  # redirect to index
 
+
+# #for unfilled fields
+# @app.route("/finishform")
+# def incomplete():
+#     errorpage = make_response(render_template('error.html'))
+
+
 # check users cookie for their name
-
-
 @app.route("/getcookie")
 def getcookie():
     # attempt to read the value of userID from user cookie
