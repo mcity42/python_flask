@@ -100,9 +100,13 @@ def getcookie():
         'reason': reason
     }
     #reso = requests.get("")
-
+    returnMessage = f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n<p>What happens next: ' \
+        'Our talented HR team will review the application and forward your contact information to a hiring team\'s manager.</p>' \
+        '<p>If selected within a week, you will be scheduled in 3 rounds of coding interviews and a scavenger hunt.</p>\n<p>Good Luck</p>' \
+        f'<h5>Name: {name}\nPosition: {role}\nDOB: {birth}\nAnswer: {reason}<h5>'
     # return HTML embedded with name (value of userID read from cookie)
-    return f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n'
+    # return f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n'
+    return returnMessage
 
 
 if __name__ == "__main__":
