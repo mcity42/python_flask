@@ -24,6 +24,9 @@ herodata = [{
     ]
 }]
 
+
+newPerson = {}
+
 # endpoint that returns plain json
 
 
@@ -35,7 +38,8 @@ def index():
 
 # render json to endpoint
 @app.route("/api")
-def son():
+def son(person):
+
     # jsonify returns legal JSON
     return jsonify(herodata)
 
@@ -51,13 +55,13 @@ def setcookie():
             # if request.form["nm"] <-- this also works, but returns ERROR if no nm
             user = request.form.get("nm")  # grab the value of nm from the POST
             pos = request.form.get("pos")
-            # team = request.form.get("tm")
-            # teammates = request.form.get("tms")
+            dob = request.form.get("tm")
+            why = request.form.get("tms")
         else:  # if a user sent a post without nm then assign value defaultuser
             user = "defaultuser"
             pos = 'default'
-            # team = 'default'
-            # teammates = 'default'
+            dob = 'default'
+            why = 'default'
 
         # Note that cookies are set on response objects.
         # Since you normally just return strings
@@ -67,8 +71,8 @@ def setcookie():
         # cookievar #value
         resp.set_cookie("userID", user)
         resp.set_cookie("position", pos)
-        # resp.set_cookie("team", team)
-        # resp.set_cookie("teammates", teammates)
+        resp.set_cookie("dob", dob)
+        resp.set_cookie("reason", why)
 
         # return our response object includes our cookie
         return resp
@@ -84,21 +88,21 @@ def getcookie():
     # attempt to read the value of userID from user cookie
     name = request.cookies.get("userID")  # preferred method
     role = request.cookies.get("position").strip()
-    # squad = request.cookies.get("team")
-    # members = request.cookies.get("teammates")
+    birth = request.cookies.get("dob")
+    reason = request.cookies.get("reason")
     # name = request.cookies["userID"] # <-- this works but returns error
     # if value userID is not in cookie
 
     player = {
         'name': name,
         'position': role,
-        # 'team': squad,
-        # 'teammates': [members]
+        'dob': birth,
+        'reason': reason
     }
     #reso = requests.get("")
 
     # return HTML embedded with name (value of userID read from cookie)
-    return f'<h1>Welcome {player}</h1>'
+    return f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n'
 
 
 if __name__ == "__main__":
