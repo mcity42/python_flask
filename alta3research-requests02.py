@@ -13,3 +13,9 @@ URL = 'http://127.0.0.1:2224/api'
 comp = requests.get(URL).json()
 
 pprint.pprint(comp)
+
+# fetch inventory data
+URL2 = 'http://127.0.0.1:2224/api/inventory'
+items = requests.get(URL2).json()
+
+print()

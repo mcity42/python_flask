@@ -67,18 +67,16 @@ def err():
     return render_template('error.html')
 
 
-# render json to endpoint
+# render json to api endpoints using jsonify for legal JSON
 @app.route("/api")
 def compInfo():
-    # jsonify returns legal JSON
+    # jsonify companyData
     return jsonify(companyData)
-
-# render json to endpoint
 
 
 @app.route("/api/inventory")
 def empInfo():
-    # jsonify returns legal JSON
+    # jsonify inventoryData
     return jsonify(inventoryData)
 
 
@@ -89,8 +87,9 @@ def setcookie():
     if request.method == "POST":
         # if nm was assigned via the POST
         if request.form.get("nm"):
-            # if request.form["nm"] <-- this also works, but returns ERROR if no nm
-            user = request.form.get("nm")  # grab the value of nm from the POST
+            # grab the value of nm from the POST
+            user = request.form.get("nm")
+            # if position is not null, confirm its in the available positions list
             if request.form.get("pos") != '':
                 if request.form.get("pos").lower() not in (companyData[0]['positions']):
                     return redirect(url_for('err'))
@@ -100,16 +99,13 @@ def setcookie():
             why = request.form.get("tms")
             if why == '':
                 why = 'Unanswered'
-        else:  # if a user sent a post without nm then assign value defaultuser
+        else:  # if a user sent a post without tms then assign value Unanswered
             return redirect(url_for('setcookie'))
 
-        player = {'Name': user, 'Position': pos, 'DOB': dob, 'Response': why}
-        # Note that cookies are set on response objects.
-        # Since you normally just return strings
-        # Flask will convert them into response objects for you
+        # set cookies on response object
         resp = make_response(render_template("readcookie.html"))
+
         # add a cookie to our response object
-        # cookievar #value
         resp.set_cookie("userID", user)
         resp.set_cookie("position", pos)
         resp.set_cookie("dob", dob)
@@ -118,33 +114,28 @@ def setcookie():
         # return our response object includes our cookie
         return resp
 
-    if request.method == "GET":  # if the user sends a GET
-        return redirect(url_for("index"))  # redirect to index
+    # if the user sends a GET redirect
+    if request.method == "GET":
+        return redirect(url_for("index"))
 
 
-# check users cookie for their name
+# check all cookies for the field values
 @app.route("/getcookie")
 def getcookie():
-    # attempt to read the value of userID from user cookie
-    name = request.cookies.get("userID").capitalize()  # preferred method
+    # attempt to read the values from cookies
+    name = request.cookies.get("userID")
     role = request.cookies.get("position")
-    job = role.split(" ")
-    roles = job[0].capitalize() + " " + job[1].capitalize()
-
+    role = role.upper()
     birth = request.cookies.get("dob")
     reason = request.cookies.get("reason")
-    # name = request.cookies["userID"] # <-- this works but returns error
-    # if value userID is not in cookie
 
-    returnMessage = f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our <b>{roles}</b> role.</p>\n<p>What happens next: ' \
+    returnMessage = f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our <b>{role}</b> role.</p>\n<p>What happens next: ' \
         'Our talented HR team will review the application and forward your contact information to a hiring team\'s manager.</p>' \
         '<p>If selected within a week, you will be scheduled for 3 rounds of coding interviews and a scavenger hunt.</p>\n<p><h4>Good Luck!</h4></p>' \
         f'<table><thead><tr><th>Field</th><th>Input</th></tr></thead><tbody><tr><td>Name</td><td>{name}</td></tr><tr><td>Birthdate</td><td>{birth}</td>' \
-        f'</tr><tr><td>Position</td><td>{roles}</td></tr></tbody><tfoot><tr><td>Answer</td><td>{reason}</td></tr></tfoot></table>'
+        f'</tr><tr><td>Position</td><td>{role}</td></tr></tbody><tfoot><tr><td>Answer</td><td>{reason}</td></tr></tfoot></table>'
 
-    #f'<h5>Name: {name}\nPosition: {role}\nDOB: {birth}\nAnswer: {reason}<h5>'
-    # return HTML embedded with name (value of userID read from cookie)
-    # return f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n'
+    # return HTML message with the passed in values read from cookie data
     return returnMessage
 
 
