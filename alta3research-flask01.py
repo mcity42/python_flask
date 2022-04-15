@@ -12,22 +12,46 @@ import requests
 
 app = Flask(__name__)
 
-herodata = [{
-    "name": "Spider-Man",
-    "realName": "Peter Parker",
-    "since": 1962,
-    "powers": [
-        "wall crawling",
-        "web shooters",
-        "spider senses",
-        "super human strength & agility"
-    ]
+companyData = [{
+    "company": "Malik's Company",
+    "stockTicker": "MC",
+    "yearlyRevenue": "21.3 B",
+    "since": 1996,
+    "industries": [
+        "engineering",
+        "manufacuring",
+        "supply chain",
+        "eCommerce"
+    ],
+    "CEO": 'Malik City',
+    "employeeCount": 12457,
+    "departments": [
+        "human resources",
+        "engineering",
+        "executive suite",
+        "shipping",
+        "customer service"
+    ],
+    "positions": ['Software Engineer', 'Data Scientist', 'Automation Engineer', 'Cloud Engineer',
+                  'Truck Driver', 'Recruiter', 'Manager', 'Web Developer', 'Warehouse Specialist']
 }]
 
 
-newPerson = {}
-
-# endpoint that returns plain json
+inventoryData = [{
+    "phones": ['iphone 12', 'iphone 11', 'Motorola Edge', 'Google Pixel'],
+    "computers": ["MacBook Pro", "HP 255", "Lenovo Ideapad"],
+    "gaming systems": ["PS5", "Xbox X", "Nintendo Wii", "PS4"],
+    "Cars": 'Tesla Model 3',
+    "invenoryCount": 953427,
+    "robots": "Astro 3",
+    "other": [
+        "Apple Watch",
+        "Apple Ipad",
+        "Amazon Fire",
+        "Amazon Firestick",
+        "AppleTV"
+    ]
+}]
 
 
 # render html to endpoint
@@ -38,14 +62,20 @@ def index():
 
 # render json to endpoint
 @app.route("/api")
-def son(person):
-
+def compInfo():
     # jsonify returns legal JSON
-    return jsonify(herodata)
+    return jsonify(companyData)
+
+# render json to endpoint
+
+
+@app.route("/api/inventory")
+def empInfo():
+    # jsonify returns legal JSON
+    return jsonify(inventoryData)
+
 
 # set the cookie and send it back to the user
-
-
 @app.route("/setcookie", methods=["POST", "GET"])
 def setcookie():
     # if user generates a POST to our API
@@ -62,6 +92,7 @@ def setcookie():
         else:  # if a user sent a post without nm then assign value defaultuser
             return redirect(url_for('setcookie'))
 
+        player = {'Name': user, 'Position': pos, 'DOB': dob, 'Response': why}
         # Note that cookies are set on response objects.
         # Since you normally just return strings
         # Flask will convert them into response objects for you
@@ -80,12 +111,6 @@ def setcookie():
         return redirect(url_for("index"))  # redirect to index
 
 
-# #for unfilled fields
-# @app.route("/finishform")
-# def incomplete():
-#     errorpage = make_response(render_template('error.html'))
-
-
 # check users cookie for their name
 @app.route("/getcookie")
 def getcookie():
@@ -97,17 +122,13 @@ def getcookie():
     # name = request.cookies["userID"] # <-- this works but returns error
     # if value userID is not in cookie
 
-    player = {
-        'name': name,
-        'position': role,
-        'dob': birth,
-        'reason': reason
-    }
-    #reso = requests.get("")
     returnMessage = f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n<p>What happens next: ' \
         'Our talented HR team will review the application and forward your contact information to a hiring team\'s manager.</p>' \
         '<p>If selected within a week, you will be scheduled in 3 rounds of coding interviews and a scavenger hunt.</p>\n<p>Good Luck</p>' \
-        f'<h5>Name: {name}\nPosition: {role}\nDOB: {birth}\nAnswer: {reason}<h5>'
+        f'<table><thead><tr><th>Field</th><th>Input</th></tr></thead><tbody><tr><td>Name</td><td>{name}</td></tr><tr><td>Birthdate</td><td>{birth}</td>' \
+        f'</tr><tr><td>Position</td><td>{role}</td></tr></tbody><tfoot><tr><td>Answer</td><td>{reason}</td></tr></tfoot></table>'
+
+    #f'<h5>Name: {name}\nPosition: {role}\nDOB: {birth}\nAnswer: {reason}<h5>'
     # return HTML embedded with name (value of userID read from cookie)
     # return f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n'
     return returnMessage
