@@ -8,32 +8,27 @@
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
-        html,body,h1,h3,p,form {font-family: "Roboto", sans-serif}
+        html,body,h1,h3, h5, p, form {font-family: "Roboto", sans-serif}
         .roles{border-color: red}
-        #errorMsg{color: red}
-        @media screen and (max-width: 600px) {
-            .column, input[type=submit] {
-            width: 100%;
-            margin-top: 0;
-            margin-left: 100px;
-            }
-        }
+        .errorMsg{color: red; text-align: center;}
+        html{max-width: 20%; max-height: 20%;}
+        body, form{margin-top: 30%; max-width: 50vw; height:50vw; padding: 5px; border: 15px; border-color: black;}      
+        #form{text-align: center; margin-left: 25vw; width: 50vw; height: 600px; box-sizing: border-box;}    
         </style>
         </head>
     </header>
    <body>          
-      <form action = "/setcookie" method = "POST">
-         <p><h1>Malik's Company</h1></p>
-         <p><h3>Application</h3></p>
+      <form id="form" action = "/setcookie" method = "POST">
+         <p><h1>Form Not Submitted!</h1></p>
+         <p><h3>Submit Form To Apply</h3></p>
          <p><input type = "text" name = "nm" placeholder="Name" required/></p>
-         <p5>Please enter one of our available roles</p5>
          <p><input type = "text" name = "pos" placeholder="Position" class="roles" required/></p>
-         <p class="errorMsg"><h5 class="errorMsg">Available roles: Software Engineer, Data Scientist, Automation Engineer, Cloud Engineer,
-            Truck Driver, Recruiter, Manager, Web Developer, Warehouse Specialist</h5></p>
          <p><input type = "text" name = "tm" placeholder="DOB" required/></p>
          <p><input type = "text" name = "tms" placeholder="Why Should We Hire You?"/></p>
          <p><input type = "submit" value = 'Apply'/></p>
-         
+         <p5>Please enter one of our available roles</p5>
+         <p class="errorMsg">Available roles: Software Engineer, Data Scientist, Automation Engineer, Cloud Engineer,
+            Truck Driver, Recruiter, Manager, Web Developer, Warehouse Specialist</p>
       </form>
 
       <script>

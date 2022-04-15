@@ -9,12 +9,18 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <style>
       html,body,h1,h3,p,form {font-family: "Roboto", sans-serif}
+      html{max-width: 20%; max-height: 20%;}
+      body, form{margin-top: 30%; max-width: 50vw; height:50vw; padding: 5px; border: 4px; border-color: grey;}
+      #form{text-align: center; margin-left: 25vw; width: 50vw; height: 600px; border-style:solid;}
       </style>
       </head>
    <body>          
-      <form style= "text-align: center; margin-bottom: 30%; width: 50vw;" action = "/setcookie" method = "POST">
-         <p><h1>Malik's Company</h1></p>
-         <p><h3>Application</h3></p>
+      <form id="form" action = "/setcookie" method = "POST">
+         <p><h1>Malik's Company is hiring!</h1></p>
+         <i class="fa fa-code" style="font-size:36px; text-align: center;"></i>
+         <p><h3>Submit Form To Apply</h3></p>
+         <br>
+         <br>
          <p><input type = "text" name = "nm" placeholder="Name" required/></p>
          <p><input type = "text" name = "pos" placeholder="Position" required/></p>
          <p><input type = "text" name = "tm" placeholder="DOB" required/></p>
