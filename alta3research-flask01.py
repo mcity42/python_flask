@@ -33,24 +33,24 @@ companyData = [{
         "shipping",
         "customer service"
     ],
-    "positions": ['Software Engineer', 'Data Scientist', 'Automation Engineer', 'Cloud Engineer',
-                  'Truck Driver', 'Recruiter', 'Manager', 'Web Developer', 'Warehouse Specialist']
+    "positions": ['software engineer', 'data scientist', 'automation engineer', 'cloud Engineer',
+                  'truck driver', 'recruiter', 'manager', 'web developer', 'warehouse specialist']
 }]
 
 
 inventoryData = [{
-    "phones": ['iphone 12', 'iphone 11', 'Motorola Edge', 'Google Pixel'],
-    "computers": ["MacBook Pro", "HP 255", "Lenovo Ideapad"],
-    "gaming systems": ["PS5", "Xbox X", "Nintendo Wii", "PS4"],
-    "Cars": 'Tesla Model 3',
+    "phones": ['iphone 12', 'iphone 11', 'motorola edge', 'google pixel'],
+    "computers": ["macbook pro", "hp 255", "lenovo ideapad"],
+    "gaming systems": ["PS5", "Xbox X", "nintendo wii", "PS4"],
+    "cars": 'tesla model 3',
     "invenoryCount": 953427,
-    "robots": "Astro 3",
+    "robots": "astro 3",
     "other": [
-        "Apple Watch",
-        "Apple Ipad",
-        "Amazon Fire",
-        "Amazon Firestick",
-        "AppleTV"
+        "apple watch",
+        "apple ipad",
+        "amazon fire",
+        "amazon firestick",
+        "appleTV"
     ]
 }]
 
@@ -92,7 +92,7 @@ def setcookie():
             # if request.form["nm"] <-- this also works, but returns ERROR if no nm
             user = request.form.get("nm")  # grab the value of nm from the POST
             if request.form.get("pos") != '':
-                if request.form.get("pos") not in (companyData[0]['positions']):
+                if request.form.get("pos").lower() not in (companyData[0]['positions']):
                     return redirect(url_for('err'))
                 else:
                     pos = request.form.get("pos")
@@ -126,18 +126,21 @@ def setcookie():
 @app.route("/getcookie")
 def getcookie():
     # attempt to read the value of userID from user cookie
-    name = request.cookies.get("userID")  # preferred method
-    role = request.cookies.get("position").strip()
+    name = request.cookies.get("userID").capitalize()  # preferred method
+    role = request.cookies.get("position")
+    job = role.split(" ")
+    roles = job[0].capitalize() + " " + job[1].capitalize()
+
     birth = request.cookies.get("dob")
     reason = request.cookies.get("reason")
     # name = request.cookies["userID"] # <-- this works but returns error
     # if value userID is not in cookie
 
-    returnMessage = f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our {role} role.</p>\n<p>What happens next: ' \
+    returnMessage = f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our <b>{roles}</b> role.</p>\n<p>What happens next: ' \
         'Our talented HR team will review the application and forward your contact information to a hiring team\'s manager.</p>' \
-        '<p>If selected within a week, you will be scheduled in 3 rounds of coding interviews and a scavenger hunt.</p>\n<p>Good Luck</p>' \
+        '<p>If selected within a week, you will be scheduled for 3 rounds of coding interviews and a scavenger hunt.</p>\n<p><h4>Good Luck!</h4></p>' \
         f'<table><thead><tr><th>Field</th><th>Input</th></tr></thead><tbody><tr><td>Name</td><td>{name}</td></tr><tr><td>Birthdate</td><td>{birth}</td>' \
-        f'</tr><tr><td>Position</td><td>{role}</td></tr></tbody><tfoot><tr><td>Answer</td><td>{reason}</td></tr></tfoot></table>'
+        f'</tr><tr><td>Position</td><td>{roles}</td></tr></tbody><tfoot><tr><td>Answer</td><td>{reason}</td></tr></tfoot></table>'
 
     #f'<h5>Name: {name}\nPosition: {role}\nDOB: {birth}\nAnswer: {reason}<h5>'
     # return HTML embedded with name (value of userID read from cookie)
