@@ -132,7 +132,7 @@ def getcookie():
     returnMessage = f'<h1>Congrats {name}!</h1>\n<p>You have successfully applied to our <b>{role}</b> role.</p>\n<p>What happens next: ' \
         'Our talented HR team will review the application and forward your contact information to a hiring team\'s manager.</p>' \
         '<p>If selected within a week, you will be scheduled for 3 rounds of coding interviews and a scavenger hunt.</p>\n<p><h4>Good Luck!</h4></p>' \
-        f'<table><thead><tr><th>Field</th><th>Input</th></tr></thead><tbody><tr><td>Name</td><td>{name}</td></tr><tr><td>Birthdate</td><td>{birth}</td>' \
+        f'<table><thead><tr></tr></thead><tbody><tr><td>Name</td><td>{name}</td></tr><tr><td>Birthdate</td><td>{birth}</td>' \
         f'</tr><tr><td>Position</td><td>{role}</td></tr></tbody><tfoot><tr><td>Answer</td><td>{reason}</td></tr></tfoot></table>'
 
     # return HTML message with the passed in values read from cookie data
