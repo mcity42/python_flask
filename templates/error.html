@@ -8,19 +8,21 @@
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
-        html,body,h1,h3, h5, p, form {font-family: "Roboto", sans-serif}
-        .roles{border-color: red}
-        .errorMsg{color: red; text-align: center;}
-        html{max-width: 20%; max-height: 20%;}
-        body, form{margin-top: 30%; max-width: 50vw; height:50vw; padding: 5px; border: 15px; border-color: black;}      
-        #form{text-align: center; margin-left: 25vw; width: 50vw; height: 600px; box-sizing: border-box;}    
+            html,body,h1,h3, h5, p, form {font-family: "Roboto", sans-serif}
+            .roles{border-color: red}
+            .errorMsg{color: red; text-align: center;}
+            html{max-width: 20%; max-height: 20%;}
+            body, form{margin-top: 30%; max-width: 50vw; height:50vw; padding: 5px; border: 4px; border-color: black;}      
+            #form{text-align: center; margin-left: 25vw; width: 50vw; height: 600px; border-style: solid;}    
         </style>
-        </head>
-    </header>
-   <body>          
+    </head>
+    <body>          
       <form id="form" action = "/setcookie" method = "POST">
          <p><h1>Form Not Submitted!</h1></p>
          <p><h3>Submit Form To Apply</h3></p>
+         <i class="fa fa-code" style="font-size:36px; text-align: center;"></i>
+         <br>
+         <br>
          <p><input type = "text" name = "nm" placeholder="Name" required/></p>
          <p><input type = "text" name = "pos" placeholder="Position" class="roles" required/></p>
          <p><input type = "text" name = "tm" placeholder="DOB" required/></p>
