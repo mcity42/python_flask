@@ -8,8 +8,8 @@ from flask import make_response
 import requests
 import pprint
 
-
+# fetch the company data
 URL = 'http://127.0.0.1:2224/api'
-reso = requests.get(URL).json()
+comp = requests.get(URL).json()
 
-pprint.pprint(reso)
+pprint.pprint(comp)
