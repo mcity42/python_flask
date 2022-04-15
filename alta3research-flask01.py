@@ -9,6 +9,7 @@ from flask import jsonify
 from flask import url_for
 from flask import make_response
 import requests
+import pprint
 
 app = Flask(__name__)
 
@@ -60,6 +61,12 @@ def index():
     return render_template('login.html')
 
 
+# render html to endpoint
+@app.route('/error')
+def err():
+    return render_template('error.html')
+
+
 # render json to endpoint
 @app.route("/api")
 def compInfo():
@@ -84,7 +91,11 @@ def setcookie():
         if request.form.get("nm"):
             # if request.form["nm"] <-- this also works, but returns ERROR if no nm
             user = request.form.get("nm")  # grab the value of nm from the POST
-            pos = request.form.get("pos")
+            if request.form.get("pos") != '':
+                if request.form.get("pos") not in (companyData[0]['positions']):
+                    return redirect(url_for('err'))
+                else:
+                    pos = request.form.get("pos")
             dob = request.form.get("tm")
             why = request.form.get("tms")
             if why == '':
